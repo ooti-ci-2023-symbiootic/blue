@@ -13,67 +13,108 @@ class Ask
     public void Run()
     {
         Console.WriteLine("Ask");
+        string userName;
 
-        string json = @"
+        // Dictionary to store user answers for all users
+        var allUserAnswers = new List<Dictionary<string, string>>();
+
+        while (true)
         {
-            ""1"": {
-                ""question"": ""Who is better?"",
-                ""type"": ""single-choice"",
-                ""answers"": {
-                    ""1"": ""cats"",
-                    ""2"": ""dogs""
-                }
-            },
-            ""2"": {
-                ""question"": ""How old are you?"",
-                ""type"": ""number"",
-                ""answers"": {
-                    ""1"": ""User Input""
-                }
-            }
-        }";
+            Console.Write("Please enter your name (or '#' to exit): ");
+            userName = Console.ReadLine();
 
-        var questions = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, Question>>(json);
-        var userAnswers = new Dictionary<string, string>();
-
-        foreach (var question in questions)
-        {
-            Console.WriteLine(question.Value.question);
-
-            if (question.Value.type == "single-choice")
+            if (userName == "#")
             {
-                foreach (var answer in question.Value.answers)
-                {
-                    Console.WriteLine($"{answer.Key}: {answer.Value}");
-                }
-
-                Console.Write("Your choice: ");
-                string userChoice = Console.ReadLine();
-
-                if (question.Value.answers.ContainsKey(userChoice))
-                {
-                    userAnswers[question.Key] = question.Value.answers[userChoice];
-                }
-                else
-                {
-                    Console.WriteLine("Invalid choice. Please choose a valid option.");
-                }
+                // User wants to exit, so print answers for all users and exit
+                PrintAllUserAnswers(allUserAnswers);
+                return;
             }
-            else if (question.Value.type == "number")
+
+            var userAnswers = new Dictionary<string, string>();
+
+            string json = @"
             {
-                Console.Write("Enter your age: ");
-                string age = Console.ReadLine();
-                userAnswers[question.Key] = age;
+                ""1"": {
+                    ""question"": ""Who is better?"",
+                    ""type"": ""single-choice"",
+                    ""answers"": {
+                        ""1"": ""cats"",
+                        ""2"": ""dogs""
+                    }
+                },
+                ""2"": {
+                    ""question"": ""How old are you?"",
+                    ""type"": ""number"",
+                    ""answers"": {
+                        ""1"": ""User Input""
+                    }
+                }
+            }";
+
+            var questions = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, Question>>(json);
+
+            foreach (var question in questions)
+            {
+                Console.WriteLine(question.Value.question);
+
+                if (question.Value.type == "single-choice")
+                {
+                    foreach (var answer in question.Value.answers)
+                    {
+                        Console.WriteLine($"{answer.Key}: {answer.Value}");
+                    }
+
+                    Console.Write("Your choice (or '#' to exit): ");
+                    string userChoice = Console.ReadLine();
+
+                    if (userChoice == "#")
+                    {
+                        // User wants to exit, so print answers for this user and continue to the next user
+                        break;
+                    }
+
+                    if (question.Value.answers.ContainsKey(userChoice))
+                    {
+                        userAnswers[question.Key] = question.Value.answers[userChoice];
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid choice. Please choose a valid option.");
+                    }
+                }
+                else if (question.Value.type == "number")
+                {
+                    Console.Write("Enter your age: ");
+                    string age = Console.ReadLine();
+                    userAnswers[question.Key] = age;
+                }
             }
+
+            // Console.WriteLine("Thank you, " + userName + "! Your answers for this round:");
+            // PrintAnswers(userAnswers);
+
+            // Add user answers to the list of all user answers
+            allUserAnswers.Add(userAnswers);
         }
+    }
 
-        Console.WriteLine("\nResults:");
+    private void PrintAnswers(Dictionary<string, string> userAnswers)
+    {
         foreach (var answer in userAnswers)
         {
-            Console.WriteLine($"Question {answer.Key}: {questions[answer.Key].question}");
-            Console.WriteLine($"Your answer: {answer.Value}");
+            Console.WriteLine($"Question {answer.Key}: {answer.Value}");
+        }
+    }
+
+    private void PrintAllUserAnswers(List<Dictionary<string, string>> allUserAnswers)
+    {
+        Console.WriteLine("\nAll User Answers:");
+        for (int i = 0; i < allUserAnswers.Count; i++)
+        {
+            Console.WriteLine($"User {i + 1} Answers:");
+            PrintAnswers(allUserAnswers[i]);
+            Console.WriteLine();
         }
     }
 }
-
 
