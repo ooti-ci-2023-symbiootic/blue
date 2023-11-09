@@ -1,0 +1,12 @@
+{
+    "1":{
+        "question":"who's better?",
+        "type": "single-choice",
+        "answers":{
+            "1":"cats",
+            "2":"dogs",
+            "3":"cats",
+            "4":"dogs"
+        }
+    }
+}
