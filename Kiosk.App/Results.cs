@@ -2,17 +2,46 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Text.Json;
 namespace Kiosk.App;
 
 class Results {
     public void Run() {
         Console.WriteLine("Results");
 
+       // try
+       // {
+            // Read the entire file content as a string
+            string jsonContent = File.ReadAllText("userAnswers.txt");
 
-         // Example data
-        int value1 = 30;
-        int value2 = 70;
+            // Deserialize the JSON string into a dictionary
+            List<Dictionary<string, string>> data = JsonSerializer.Deserialize<List<Dictionary<string, string>>>(jsonContent);
+
+        // Dictionary to store counts of each "1" value
+        Dictionary<string, int> counts = new Dictionary<string, int>();
+
+        // Count occurrences of each "1" value
+        foreach (var item in data)
+        {
+            if (item.TryGetValue("1", out string value1))
+            {
+                if (counts.ContainsKey(value1))
+                {
+                    counts[value1]++;
+                }
+                else
+                {
+                    counts[value1] = 1;
+                }
+            }
+        }
+
+        List<Result> results = new List<Result>();
+
+        foreach (var count in counts)
+        {
+            results.Add(new Result { Value = count.Key, Count = count.Value });
+        }
 
         // Create HTML content with Chart.js
         string htmlContent = $@"
@@ -44,9 +73,9 @@ class Results {
                     var myPieChart = new Chart(ctx, {{
                         type: 'pie',
                         data: {{
-                            labels: ['Value 1', 'Value 2'],
+                            labels: ['{results[0].Value}', '{results[1].Value}'],
                             datasets: [{{
-                                data: [{value1}, {value2}],
+                                data: [{results[0].Count}, {results[1].Count}],
                                 backgroundColor: ['red', 'blue']
                             }}]
                         }},
@@ -67,3 +96,9 @@ class Results {
     
     }
 }
+
+public class Result
+    {
+        public string Value { get; set; }
+        public int Count { get; set; }
+    }
