@@ -9,7 +9,8 @@ class Results {
     public void Run() {
         Console.WriteLine("Results");
 
-        // Example data
+
+         // Example data
         int value1 = 30;
         int value2 = 70;
 
@@ -20,9 +21,24 @@ class Results {
             <head>
                 <title>Pie Chart Example</title>
                 <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
+                <style>
+                    body {{
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        height: 80vh;
+                        margin: 0;
+                    }}
+
+                    canvas {{
+                        width: 30%;
+                        height: 30%;
+                    }}
+                </style>
             </head>
             <body>
-                <canvas id='myPieChart' width='400' height='400'></canvas>
+                <canvas id='myPieChart'></canvas>
                 <script>
                     var ctx = document.getElementById('myPieChart').getContext('2d');
                     var myPieChart = new Chart(ctx, {{
@@ -46,7 +62,8 @@ class Results {
         // Write HTML to file
         File.WriteAllText("pie_chart.html", htmlContent);
 
-        Console.WriteLine("HTML file with slightly zoomed out pie chart generated successfully.");
+        Console.WriteLine("HTML file with pie chart in the first half of the page generated successfully.");
+    
     
     }
 }
