@@ -1,12 +1,12 @@
-
-type : single-choice
-options : [cats, dogs]
-question: "Who is better?"
-
-type : number
-options : input (restricted)
-question : "How old are you?"
-
-type : text
-options : free text (no option)
-question : "What is your favorite color?"
+single-choice
+WHo is better?
+cat,dog
+----------------------
+number
+How old are you?
+input
+----------------------
+text
+What is fav color?
+input
+----------------------
