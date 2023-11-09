@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Bar Chart Example</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<canvas id="barChart" width="400" height="400"></canvas>
+<script>
+var ctx = document.getElementById('barChart').getContext('2d');
+var data = {
+labels: [
+1,
+2,
+3,
+],
+datasets: [{
+label: 'Frequency',
+data: [
+20,
+30,
+50,
+],
+backgroundColor: [
+'#'+(Math.random()*0xFFFFFF<<0).toString(16),
+'#'+(Math.random()*0xFFFFFF<<0).toString(16),
+'#'+(Math.random()*0xFFFFFF<<0).toString(16),
+],
+}]
+}
+;
+var options = { responsive: false, scales: { x: { type: 'linear', position: 'bottom' } } };
+var barChart = new Chart(ctx, { type: 'bar', data: data, options: options });
+</script>
+</body>
+</html>

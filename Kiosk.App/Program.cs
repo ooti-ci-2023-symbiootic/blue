@@ -55,6 +55,15 @@ var report = new Command("report", "Generate report of the results")
 {
     Handler = CommandHandler.Create(() => new Report().Run())
 };
+var barChart = new Command("barchart", "Generate bar chart report of the results")
+{
+    Handler = CommandHandler.Create(() => new BarChart().Run())
+};
+
+var pieChart = new Command("piechart", "Generate pie chart report of the results")
+{
+    Handler = CommandHandler.Create(() => PieChart.Run())
+};
 
 // NOTE: if you want a subcommand to have options, do something like this:
 //
@@ -75,7 +84,8 @@ rootCommand.AddCommand(ask);
 rootCommand.AddCommand(survey);
 rootCommand.AddCommand(results);
 rootCommand.AddCommand(report);
-
+rootCommand.AddCommand(barChart);
+rootCommand.AddCommand(pieChart);
 
 // Parse the incoming args and invoke the handler
 return rootCommand.Invoke(args);
