@@ -2,6 +2,7 @@
 using System.CommandLine.Invocation;
 using Kiosk.App;
 
+
 // This is an example program that shows how to handle CLI arguments
 // with System.CommandLine. Feel free to throw it all away.
 //
