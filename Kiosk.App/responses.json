@@ -1,0 +1,22 @@
+{
+    "1":{
+        "question":"who's better?",
+        "type": "single-choice",
+        "answers":{
+            "1":"cats",
+            "2":"dogs",
+            "3":"cats",
+            "4":"dogs"
+        }
+    },
+    "2":{
+        "question":"how old are you?",
+        "type": "number",
+        "answers":{
+            "1":"23",
+            "2":"35",
+            "3":"24",
+            "4":"34"
+        }
+    }
+}

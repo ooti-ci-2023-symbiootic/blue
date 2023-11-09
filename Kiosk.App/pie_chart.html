@@ -1,0 +1,28 @@
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Pie Chart Example</title>
+                <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
+            </head>
+            <body>
+                <canvas id='myPieChart' width='400' height='400'></canvas>
+                <script>
+                    var ctx = document.getElementById('myPieChart').getContext('2d');
+                    var myPieChart = new Chart(ctx, {
+                        type: 'pie',
+                        data: {
+                            labels: ['Value 1', 'Value 2'],
+                            datasets: [{
+                                data: [30, 70],
+                                backgroundColor: ['red', 'blue']
+                            }]
+                        },
+                        options: {
+                            cutoutPercentage: 5  // Adjust this value to zoom out
+                        }
+                    });
+                </script>
+            </body>
+            </html>
+        
